@@ -1,0 +1,22 @@
+class Solution {
+    /**
+     * @param {number[]} nums
+     * @param {number} k
+     * @return {number[]}
+     */
+    topKFrequent(nums, k) {
+        let map = {};
+        for(let i=0;i<nums.length;i++){
+            map[nums[i]] = (map[nums[i]] || 0) + 1;
+        }
+
+        const minHeap = new MinPriorityQueue(x => x.freq)
+        for(let key in map){
+            minHeap.push({val: key, freq: map[key]})
+            if(minHeap.size() > k){
+                minHeap.pop()
+            }
+        }
+        return minHeap.toArray().map(x => Number(x.val))
+    }
+}
